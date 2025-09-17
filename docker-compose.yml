@@ -1,11 +1,20 @@
 version: '3.8'
 
+networks:
+  sdcs-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.18.0.0/16  # 匹配代码中IP网段
+          gateway: 172.18.0.1
+
 services:
   sdcs-1:
     build: .
     container_name: sdcs-server-1
     ports:
-      - "9527:3000"
+      - "9527:2000"
+      - "3000:3000"
     networks:
       sdcs-network:
         ipv4_address: 172.18.0.2
@@ -15,7 +24,8 @@ services:
     build: .
     container_name: sdcs-server-2
     ports:
-      - "9528:3000"
+      - "9528:2000"
+      - "3000:3000"
     networks:
       sdcs-network:
         ipv4_address: 172.18.0.3
@@ -25,7 +35,8 @@ services:
     build: .
     container_name: sdcs-server-3
     ports:
-      - "9529:3000"
+      - "9529:2000"
+      - "3000:3000"
     networks:
       sdcs-network:
         ipv4_address: 172.18.0.4
